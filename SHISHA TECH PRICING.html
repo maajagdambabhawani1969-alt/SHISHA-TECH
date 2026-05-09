@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>SHI-SHA Tech — Pricing</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#020810;--navy:#050e1f;--blue:#0a1628;
+  --neon:#00f0ff;--neon2:#7b2fff;--neon3:#00ff88;
+  --glass:rgba(0,240,255,0.05);--glass2:rgba(255,255,255,0.03);
+  --border:rgba(0,240,255,0.15);--text:#e8f4ff;--muted:#7a9bb5;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;overflow-x:hidden;min-height:100vh}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--neon);border-radius:10px}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+@keyframes glow{0%,100%{box-shadow:0 0 20px rgba(0,240,255,.2)}50%{box-shadow:0 0 40px rgba(0,240,255,.5)}}
+@keyframes countDown{from{stroke-dashoffset:0}to{stroke-dashoffset:283}}
+
+/* ─── TICKER ─── */
+.disc-ticker{position:fixed;top:0;left:0;width:100%;z-index:2000;background:linear-gradient(90deg,rgba(255,50,50,.13),rgba(255,100,0,.09));border-bottom:1px solid rgba(255,80,80,.3);padding:6px 0;overflow:hidden;display:flex;align-items:center}
+.t-label{background:linear-gradient(135deg,#ff4444,#ff8800);color:#fff;font-size:.66rem;font-weight:900;letter-spacing:2px;padding:3px 14px;white-space:nowrap;flex-shrink:0;border-right:1px solid rgba(255,100,0,.4);margin-right:14px;text-transform:uppercase}
+.t-track{display:flex;white-space:nowrap;animation:tick 30s linear infinite}
+.t-track:hover{animation-play-state:paused}
+.t-text{font-size:.7rem;color:rgba(255,200,200,.85);padding-right:50px;letter-spacing:.4px}
+.t-text strong{color:#ff7777}
+.t-sep{color:rgba(255,120,0,.5);padding-right:50px}
+@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ─── NAV ─── */
+nav{position:fixed;top:34px;width:100%;z-index:1000;padding:13px 5%;display:flex;align-items:center;justify-content:space-between;background:rgba(2,8,16,.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-text{line-height:1}
+.logo-text .n{font-size:1.05rem;font-weight:900;letter-spacing:3px;background:linear-gradient(135deg,#00f0ff,#7b2fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo-text .s{font-size:.5rem;letter-spacing:4px;color:var(--muted);text-transform:uppercase}
+.nav-links{display:flex;gap:20px;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.8rem;letter-spacing:1px;text-transform:uppercase;transition:.3s}
+.nav-links a:hover,.nav-links a.active{color:var(--neon)}
+.nav-cta{background:linear-gradient(135deg,var(--neon2),var(--neon));color:#000;padding:8px 18px;border-radius:25px;font-weight:700;font-size:.78rem;text-decoration:none;letter-spacing:1px;transition:.3s}
+.nav-cta:hover{box-shadow:0 0 20px var(--neon);transform:scale(1.04)}
+
+/* ─── HERO ─── */
+.hero{padding:130px 5% 60px;text-align:center;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(0,240,255,.1) 0%,rgba(123,47,255,.07) 40%,transparent 70%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,240,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,240,255,.03) 1px,transparent 1px);background-size:50px 50px}
+.hero-inner{position:relative;z-index:2;max-width:780px;margin:0 auto}
+.badge{display:inline-flex;align-items:center;gap:8px;background:var(--glass);border:1px solid var(--border);padding:6px 16px;border-radius:30px;font-size:.74rem;color:var(--neon);letter-spacing:2px;margin-bottom:20px;text-transform:uppercase}
+.badge-dot{width:7px;height:7px;background:var(--neon3);border-radius:50%;animation:pulse 1.5s infinite}
+.hero h1{font-size:clamp(2rem,5vw,3.4rem);font-weight:900;line-height:1.15;margin-bottom:14px}
+.grad{background:linear-gradient(135deg,var(--neon),var(--neon2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--muted);font-size:.95rem;line-height:1.7;margin-bottom:28px}
+
+/* ─── COUNTDOWN ─── */
+.countdown-bar{display:inline-flex;align-items:center;gap:14px;background:linear-gradient(135deg,rgba(255,80,0,.1),rgba(255,30,30,.07));border:1px solid rgba(255,100,0,.35);padding:10px 22px;border-radius:12px;margin-bottom:32px;flex-wrap:wrap;justify-content:center}
+.cd-label{font-size:.7rem;color:#ff8844;letter-spacing:2px;text-transform:uppercase;font-weight:800}
+.cd-units{display:flex;gap:10px}
+.cd-unit{text-align:center;min-width:46px}
+.cd-num{display:block;font-size:1.5rem;font-weight:900;color:var(--text);line-height:1;background:rgba(0,0,0,.4);border:1px solid rgba(255,100,0,.3);border-radius:8px;padding:6px 10px}
+.cd-lbl{font-size:.58rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:3px;display:block}
+.cd-sep{font-size:1.4rem;font-weight:900;color:#ff7744;margin-top:2px}
+
+/* ─── TABS ─── */
+.tab-bar{display:flex;gap:10px;justify-content:center;margin:0 0 40px;flex-wrap:wrap}
+.tab-btn{background:var(--glass2);border:1px solid var(--border);color:var(--muted);padding:10px 24px;border-radius:25px;font-size:.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:.3s;font-family:inherit}
+.tab-btn.active,.tab-btn:hover{background:linear-gradient(135deg,rgba(0,240,255,.12),rgba(123,47,255,.08));border-color:var(--neon);color:var(--neon);box-shadow:0 0 15px rgba(0,240,255,.12)}
+
+/* ─── SECTION ─── */
+.section{padding:20px 5% 70px}
+.s-tag{display:inline-block;background:var(--glass);border:1px solid var(--border);padding:4px 14px;border-radius:20px;font-size:.68rem;color:var(--neon);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+.s-title{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;margin-bottom:10px}
+.s-sub{color:var(--muted);font-size:.88rem;line-height:1.7;max-width:580px}
+
+/* ─── PLAN CARDS ─── */
+.plans-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:24px;margin-top:14px;align-items:start}
+.plan-card{background:var(--glass2);border:1px solid var(--border);border-radius:22px;padding:32px 28px;position:relative;transition:.4s;overflow:hidden}
+.plan-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(0,240,255,.06),transparent 60%);opacity:0;transition:.4s}
+.plan-card:hover{transform:translateY(-8px);box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.plan-card:hover::before{opacity:1}
+.plan-card.popular{border-color:var(--neon);box-shadow:0 0 40px rgba(0,240,255,.15)}
+.plan-card.elite{border-color:rgba(123,47,255,.5);box-shadow:0 0 30px rgba(123,47,255,.12)}
+.plan-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);font-size:.65rem;font-weight:900;letter-spacing:2px;padding:5px 18px;border-radius:20px;text-transform:uppercase;white-space:nowrap}
+.pb-pop{background:linear-gradient(135deg,var(--neon2),var(--neon));color:#000}
+.pb-elite{background:linear-gradient(135deg,#7b2fff,#b57bff);color:#fff}
+.pb-deal{background:linear-gradient(135deg,#ffb400,#ff6a00);color:#000}
+.plan-icon{font-size:2rem;margin-bottom:12px;margin-top:8px}
+.plan-name{font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.plan-name.c-neon{color:var(--neon)}.plan-name.c-purple{color:#b57bff}.plan-name.c-gold{color:#ffb400}.plan-name.c-green{color:var(--neon3)}
+.plan-price{font-size:2.8rem;font-weight:900;line-height:1;margin-bottom:4px}
+.plan-price .per{font-size:1rem;font-weight:400;color:var(--muted)}
+.plan-price.c-neon{background:linear-gradient(135deg,var(--neon),var(--neon2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.plan-price.c-purple{background:linear-gradient(135deg,#b57bff,#7b2fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.plan-price.c-gold{background:linear-gradient(135deg,#ffb400,#ff6a00);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.plan-tagline{font-size:.78rem;color:var(--muted);margin-bottom:20px}
+.divider{height:1px;background:var(--border);margin:16px 0}
+.feat-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.feat-list li{font-size:.82rem;color:var(--muted);display:flex;align-items:center;gap:9px;line-height:1.4}
+.feat-list li .ck{font-size:.75rem;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:900}
+.ck-neon{background:rgba(0,240,255,.12);border:1px solid rgba(0,240,255,.3);color:var(--neon)}
+.ck-purple{background:rgba(123,47,255,.12);border:1px solid rgba(123,47,255,.3);color:#b57bff}
+.ck-gold{background:rgba(255,180,0,.12);border:1px solid rgba(255,180,0,.3);color:#ffb400}
+.ck-green{background:rgba(0,255,136,.1);border:1px solid rgba(0,255,136,.25);color:var(--neon3)}
+.perfect-for{background:rgba(122,155,181,.06);border:1px solid var(--border);border-radius:10px;padding:10px 14px;font-size:.75rem;color:var(--muted);margin-bottom:18px;line-height:1.6}
+.perfect-for strong{color:var(--text)}
+.btn-neon{display:block;text-align:center;padding:13px;border-radius:30px;font-weight:800;font-size:.88rem;text-decoration:none;transition:.3s;background:linear-gradient(135deg,var(--neon2),var(--neon));color:#000;letter-spacing:.5px}
+.btn-neon:hover{box-shadow:0 0 28px var(--neon);transform:translateY(-2px)}
+.btn-ghost{display:block;text-align:center;padding:12px;border-radius:30px;font-weight:700;font-size:.88rem;text-decoration:none;transition:.3s;border:1px solid var(--border);color:var(--neon);letter-spacing:.5px}
+.btn-ghost:hover{background:var(--glass);box-shadow:0 0 18px rgba(0,240,255,.2);transform:translateY(-2px)}
+.btn-purple{display:block;text-align:center;padding:12px;border-radius:30px;font-weight:700;font-size:.88rem;text-decoration:none;transition:.3s;border:1px solid rgba(123,47,255,.5);color:#b57bff;letter-spacing:.5px}
+.btn-purple:hover{background:rgba(123,47,255,.1);box-shadow:0 0 18px rgba(123,47,255,.25);transform:translateY(-2px)}
+.btn-gold{display:block;text-align:center;padding:13px;border-radius:30px;font-weight:800;font-size:.88rem;text-decoration:none;transition:.3s;background:linear-gradient(135deg,#ffb400,#ff6a00);color:#000;letter-spacing:.5px}
+.btn-gold:hover{box-shadow:0 0 28px rgba(255,180,0,.4);transform:translateY(-2px)}
+
+/* COMBO */
+.combo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:20px;margin-top:14px}
+.combo-card{background:var(--glass2);border:1px solid var(--border);border-radius:18px;padding:24px;transition:.4s;position:relative;overflow:hidden}
+.combo-card:hover{transform:translateY(-6px);box-shadow:0 16px 50px rgba(0,0,0,.45)}
+.combo-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.combo-icon-name{display:flex;align-items:center;gap:12px}
+.combo-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;background:linear-gradient(135deg,rgba(0,240,255,.12),rgba(123,47,255,.12));border:1px solid var(--border);flex-shrink:0}
+.combo-price-big{font-size:1.6rem;font-weight:900}
+.bonus-box{border-radius:10px;padding:9px 13px;font-size:.75rem;line-height:1.6;margin:12px 0}
+.bonus-neon{background:rgba(0,240,255,.05);border:1px solid rgba(0,240,255,.2);color:rgba(100,220,255,.85)}
+.bonus-purple{background:rgba(123,47,255,.07);border:1px solid rgba(123,47,255,.25);color:#c8a0ff}
+.bonus-green{background:rgba(0,255,136,.05);border:1px solid rgba(0,255,136,.2);color:rgba(0,255,136,.85)}
+.bonus-gold{background:rgba(255,180,0,.06);border:1px solid rgba(255,180,0,.2);color:rgba(255,200,100,.85)}
+
+/* ULTIMATE */
+.ultimate-card{background:linear-gradient(135deg,rgba(255,180,0,.05),rgba(123,47,255,.05));border:1px solid rgba(255,180,0,.4);border-radius:22px;padding:34px;position:relative;overflow:hidden;animation:glow 3s ease-in-out infinite;margin-top:24px}
+.ultimate-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(255,180,0,.08),transparent 60%);pointer-events:none}
+.ult-inner{position:relative;display:grid;grid-template-columns:1fr auto;gap:30px;align-items:center}
+.ult-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.utag{font-size:.7rem;font-weight:700;padding:4px 12px;border-radius:20px}
+.ut1{background:rgba(255,180,0,.12);border:1px solid rgba(255,180,0,.3);color:#ffb400}
+.ut2{background:rgba(0,240,255,.08);border:1px solid rgba(0,240,255,.2);color:var(--neon)}
+.ut3{background:rgba(123,47,255,.1);border:1px solid rgba(123,47,255,.25);color:#b57bff}
+.ut4{background:rgba(0,255,136,.07);border:1px solid rgba(0,255,136,.2);color:var(--neon3)}
+.ult-price-box{text-align:center;min-width:180px}
+.ult-price{font-size:3rem;font-weight:900;background:linear-gradient(135deg,#ffb400,#ff6a00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+
+/* LIFETIME */
+.lifetime-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;margin-top:14px}
+
+/* ADDONS */
+.addons-wrap{max-width:820px;margin:14px auto 0}
+.addon-row{background:var(--glass2);border:1px solid var(--border);border-radius:14px;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;gap:16px;transition:.3s;margin-bottom:12px}
+.addon-row:hover{border-color:var(--neon);transform:translateX(4px)}
+.addon-info h4{font-size:.92rem;font-weight:700;margin-bottom:4px}
+.addon-info p{font-size:.78rem;color:var(--muted);line-height:1.5}
+.addon-cat{font-size:.62rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
+.addon-price-col{text-align:right;flex-shrink:0}
+.addon-price-col .price{font-size:1.3rem;font-weight:900;color:var(--text);white-space:nowrap}
+.payment-box{background:var(--glass2);border:1px solid var(--border);border-radius:16px;padding:22px 26px;margin-top:24px}
+.payment-box h4{font-size:.76rem;letter-spacing:2px;text-transform:uppercase;color:var(--neon);margin-bottom:14px}
+.pay-chips{display:flex;flex-wrap:wrap;gap:10px}
+.pchip{background:rgba(0,240,255,.06);border:1px solid var(--border);color:var(--text);padding:6px 16px;border-radius:25px;font-size:.8rem;font-weight:600}
+.pchip.gold{background:rgba(255,180,0,.07);border-color:rgba(255,180,0,.25);color:#ffb400}
+
+/* NOTE */
+.imp-note{background:linear-gradient(135deg,rgba(255,210,0,.08),rgba(255,160,0,.05));border:1.5px solid rgba(255,200,0,.4);border-radius:12px;padding:13px 16px;display:flex;gap:10px;align-items:flex-start;font-size:.78rem;color:rgba(255,230,150,.9);line-height:1.65;margin-top:22px}
+.imp-icon{flex-shrink:0;width:30px;height:30px;border-radius:8px;background:rgba(255,200,0,.16);border:1.5px solid rgba(255,200,0,.4);color:#ffd700;display:flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:900}
+.hl{background:rgba(255,210,0,.16);border:1px solid rgba(255,210,0,.4);color:#ffe033;font-weight:900;padding:1px 8px;border-radius:6px;font-size:.73rem;white-space:nowrap}
+
+/* FAQ */
+.faq-wrap{max-width:820px;margin:14px auto 0}
+.faq-item{border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:10px;transition:.3s}
+.faq-item:hover{border-color:rgba(0,240,255,.3)}
+.faq-q{padding:16px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:.9rem;font-weight:700;background:var(--glass2);user-select:none}
+.faq-q .arr{color:var(--neon);font-size:1.1rem;transition:.3s;flex-shrink:0}
+.faq-a{padding:0 20px;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s;font-size:.82rem;color:var(--muted);line-height:1.7}
+.faq-item.open .faq-a{max-height:200px;padding:0 20px 16px}
+.faq-item.open .arr{transform:rotate(90deg)}
+
+/* COMPARISON TABLE */
+.cmp-wrap{overflow-x:auto;margin-top:14px}
+.cmp-table{width:100%;border-collapse:collapse;min-width:600px}
+.cmp-table th,.cmp-table td{padding:12px 16px;text-align:center;font-size:.82rem;border-bottom:1px solid var(--border)}
+.cmp-table th{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;background:var(--glass2);color:var(--muted);font-weight:800}
+.cmp-table th:first-child,.cmp-table td:first-child{text-align:left;color:var(--text);font-weight:600}
+.cmp-table tr:hover td{background:rgba(0,240,255,.02)}
+.cmp-table .pop-col{background:rgba(0,240,255,.04)}
+.yes{color:var(--neon3);font-size:1rem}
+.no{color:rgba(122,155,181,.4);font-size:1rem}
+.cmp-price{font-weight:900}
+
+/* FOOTER */
+.foot-disc{background:rgba(255,60,60,.06);border:1px solid rgba(255,80,80,.18);border-radius:14px;padding:16px 22px;font-size:.76rem;color:rgba(255,180,180,.7);line-height:1.8;text-align:center;margin:0 5% 30px}
+.foot-disc strong{color:#ff8888}
+footer{background:var(--navy);border-top:1px solid var(--border);padding:24px 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:.78rem;color:var(--muted)}
+footer a{color:var(--muted);text-decoration:none;margin-left:16px;transition:.3s}
+footer a:hover{color:var(--neon)}
+
+@media(max-width:768px){
+  .ult-inner{grid-template-columns:1fr}
+  .ult-price-box{text-align:left}
+}
+@media(max-width:600px){
+  .nav-links{display:none}
+  .plans-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- DISCLAIMER TICKER -->
+<div class="disc-ticker">
+  <div class="t-label">⚠ Disclaimer</div>
+  <div style="overflow:hidden;flex:1">
+    <div class="t-track">
+      <span class="t-text"><strong>⚠ NO GUARANTEED PROFITS:</strong> Trading involves substantial financial risk. Past performance does not guarantee future results.</span>
+      <span class="t-sep">◆</span>
+      <span class="t-text"><strong>RISK WARNING:</strong> You may lose some or all invested capital. Only trade with money you can afford to lose.</span>
+      <span class="t-sep">◆</span>
+      <span class="t-text"><strong>NOT FINANCIAL ADVICE:</strong> SHI-SHA Tech tools are for informational and educational purposes only.</span>
+      <span class="t-sep">◆</span>
+      <span class="t-text"><strong>AI SIGNALS:</strong> Accuracy percentages are based on historical backtesting and do not guarantee live results.</span>
+      <span class="t-sep">◆</span>
+      <span class="t-text"><strong>NO GUARANTEED PROFITS:</strong> Trading involves substantial financial risk. Past performance does not guarantee future results.</span>
+      <span class="t-sep">◆</span>
+      <span class="t-text"><strong>RISK WARNING:</strong> You may lose some or all invested capital. Only trade with money you can afford to lose.</span>
+      <span class="t-sep">◆</span>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#">
+    <svg width="34" height="34" viewBox="0 0 38 38" fill="none"><defs><linearGradient id="nl" x1="0" y1="0" x2="38" y2="38" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#00f0ff"/><stop offset="100%" stop-color="#7b2fff"/></linearGradient><filter id="ng"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><polygon points="19,2 34,10.5 34,27.5 19,36 4,27.5 4,10.5" fill="url(#nl)" opacity=".15" stroke="url(#nl)" stroke-width="1.2"/><rect x="10" y="22" width="3.5" height="8" rx="1" fill="url(#nl)" filter="url(#ng)"/><rect x="15" y="17" width="3.5" height="13" rx="1" fill="url(#nl)" filter="url(#ng)"/><rect x="20" y="12" width="3.5" height="18" rx="1" fill="url(#nl)" filter="url(#ng)"/><rect x="25" y="19" width="3.5" height="11" rx="1" fill="url(#nl)" filter="url(#ng)"/><polyline points="11.75,21 16.75,16 21.75,11 26.75,18" fill="none" stroke="#00f0ff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" filter="url(#ng)"/><circle cx="26.75" cy="18" r="1.8" fill="#00f0ff" filter="url(#ng)"/></svg>
+    <div class="logo-text"><div class="n">SHI-SHA</div><div class="s">TECH</div></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#monthly">Monthly</a></li>
+    <li><a href="#combo">Combos</a></li>
+    <li><a href="#lifetime">Lifetime</a></li>
+    <li><a href="#addons">Add-Ons</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="https://wa.me/918629924099" target="_blank" class="nav-cta">Get Started</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="badge"><span class="badge-dot"></span> Transparent & Professional Pricing</div>
+    <h1>Simple, <span class="grad">Premium Pricing</span><br>for Every Trader</h1>
+    <p>From beginners to professional traders — choose the plan that matches your trading goals.<br>No hidden fees. Activate within 24 hours of payment.</p>
+
+    <!-- COUNTDOWN -->
+    <div class="countdown-bar">
+      <div class="cd-label">🔥 Limited Offer Ends In</div>
+      <div class="cd-units">
+        <div class="cd-unit"><span class="cd-num" id="cd-h">00</span><span class="cd-lbl">Hours</span></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><span class="cd-num" id="cd-m">00</span><span class="cd-lbl">Mins</span></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><span class="cd-num" id="cd-s">00</span><span class="cd-lbl">Secs</span></div>
+      </div>
+    </div>
+
+    <!-- Quick compare pills -->
+    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center">
+      <a href="#monthly" class="tab-btn active">📅 Monthly Plans</a>
+      <a href="#combo" class="tab-btn">📦 Combo Packages</a>
+      <a href="#lifetime" class="tab-btn">♾️ Lifetime Access</a>
+      <a href="#addons" class="tab-btn">➕ Add-Ons</a>
+      <a href="#compare" class="tab-btn">📊 Compare Plans</a>
+      <a href="#faq" class="tab-btn">❓ FAQ</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 1 — MONTHLY PLANS
+══════════════════════════════════════════ -->
+<div class="section" id="monthly">
+  <div style="text-align:center;margin-bottom:34px">
+    <span class="s-tag">Monthly Subscription</span>
+    <h2 class="s-title">Individual <span class="grad">Tool Plans</span></h2>
+    <p class="s-sub" style="margin:0 auto">Flexible monthly billing. Cancel anytime. Upgrade or downgrade instantly.</p>
+  </div>
+  <div class="plans-grid">
+
+    <!-- BASIC -->
+    <div class="plan-card">
+      <div class="plan-icon">🌱</div>
+      <div class="plan-name">Basic Plan</div>
+      <div class="plan-price">₹999<span class="per">/mo</span></div>
+      <div class="plan-tagline">Best for beginners entering AI trading</div>
+      <div class="divider"></div>
+      <ul class="feat-list">
+        <li><span class="ck ck-neon">✓</span>1 AI Trading Tool of your choice</li>
+        <li><span class="ck ck-neon">✓</span>Basic Buy/Sell Signals</li>
+        <li><span class="ck ck-neon">✓</span>Mobile Access (any device)</li>
+        <li><span class="ck ck-neon">✓</span>WhatsApp Support</li>
+        <li><span class="ck ck-neon">✓</span>Weekly Market Updates</li>
+      </ul>
+      <div class="perfect-for"><strong>Perfect for:</strong> New traders · Testing AI tools · Small capital users</div>
+      <a href="https://wa.me/918629924099?text=I want the Basic Plan ₹999/month" target="_blank" class="btn-ghost">Get Started →</a>
+    </div>
+
+    <!-- PRO -->
+    <div class="plan-card popular">
+      <div class="plan-badge pb-pop">⭐ Most Popular</div>
+      <div class="plan-icon" style="margin-top:12px">🚀</div>
+      <div class="plan-name c-neon">Pro Plan</div>
+      <div class="plan-price c-neon">₹2,499<span class="per" style="-webkit-text-fill-color:var(--muted)">/mo</span></div>
+      <div class="plan-tagline">Best for active & intraday traders</div>
+      <div class="divider"></div>
+      <ul class="feat-list">
+        <li><span class="ck ck-neon">✓</span>Any <strong style="color:var(--text)">3 AI Tools</strong> of your choice</li>
+        <li><span class="ck ck-neon">✓</span>Advanced Buy/Sell Signals</li>
+        <li><span class="ck ck-neon">✓</span>Risk Management Features</li>
+        <li><span class="ck ck-neon">✓</span>Priority WhatsApp Support</li>
+        <li><span class="ck ck-neon">✓</span>Daily Market Updates</li>
+        <li><span class="ck ck-neon">✓</span>Strategy Guidance Included</li>
+      </ul>
+      <div class="perfect-for"><strong>Perfect for:</strong> Intraday traders · Binary traders · Crypto traders</div>
+      <a href="https://wa.me/918629924099?text=I want the Pro Plan ₹2499/month" target="_blank" class="btn-neon">Get Started →</a>
+    </div>
+
+    <!-- ELITE -->
+    <div class="plan-card elite">
+      <div class="plan-badge pb-elite">👑 Professional</div>
+      <div class="plan-icon" style="margin-top:12px">💎</div>
+      <div class="plan-name c-purple">Elite Plan</div>
+      <div class="plan-price c-purple">₹4,999<span class="per" style="-webkit-text-fill-color:var(--muted)">/mo</span></div>
+      <div class="plan-tagline">Best for professional full-time traders</div>
+      <div class="divider"></div>
+      <ul class="feat-list">
+        <li><span class="ck ck-purple">✓</span><strong style="color:var(--text)">All 7 Premium AI Tools</strong></li>
+        <li><span class="ck ck-purple">✓</span>AI Automation Features</li>
+        <li><span class="ck ck-purple">✓</span>VIP WhatsApp Support</li>
+        <li><span class="ck ck-purple">✓</span>Premium Indicators</li>
+        <li><span class="ck ck-purple">✓</span>Advanced Market Scanner</li>
+        <li><span class="ck ck-purple">✓</span>Early Access to New Tools</li>
+        <li><span class="ck ck-purple">✓</span>Private Community Access</li>
+      </ul>
+      <div class="perfect-for"><strong>Perfect for:</strong> Full-time traders · High-frequency traders · Serious investors</div>
+      <a href="https://wa.me/918629924099?text=I want the Elite Plan ₹4999/month" target="_blank" class="btn-purple">Get Started →</a>
+    </div>
+  </div>
+  <div class="imp-note">
+    <span class="imp-icon">⚡</span>
+    <div><strong>⚠ Monthly Plan Terms:</strong> Plans billed in advance. Access activated within <span class="hl">24 hours</span> of confirmed payment. <strong>No refunds after tool access is granted.</strong> Prices may change with prior notice. Trading losses are not grounds for refunds.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 2 — COMBO PACKAGES
+══════════════════════════════════════════ -->
+<div class="section" id="combo" style="background:var(--navy)">
+  <div style="text-align:center;margin-bottom:34px">
+    <span class="s-tag">Combo Packages</span>
+    <h2 class="s-title">Market-Specific <span class="grad">Tool Bundles</span></h2>
+    <p class="s-sub" style="margin:0 auto">Curated combinations for each market type. One-time purchase — tools activated immediately.</p>
+  </div>
+  <div class="combo-grid">
+
+    <!-- CRYPTO -->
+    <div class="combo-card" style="border-color:rgba(0,240,255,.25)">
+      <div class="combo-header">
+        <div class="combo-icon-name">
+          <div class="combo-icon">₿</div>
+          <div>
+            <div style="font-size:.62rem;color:var(--neon);letter-spacing:2px;text-transform:uppercase">Crypto</div>
+            <h3 style="font-size:1rem;margin:2px 0 0">CRYPTO COMBO</h3>
+          </div>
+        </div>
+        <div class="combo-price-big" style="color:var(--neon)">₹3,999</div>
+      </div>
+      <ul class="feat-list">
+        <li><span class="ck ck-neon">✓</span>BTC/USDT AI Tool</li>
+        <li><span class="ck ck-neon">✓</span>Scalping Indicator</li>
+        <li><span class="ck ck-neon">✓</span>Trend Scanner</li>
+        <li><span class="ck ck-neon">✓</span>Risk Management Tool</li>
+      </ul>
+      <div class="bonus-box bonus-neon">🎁 <strong>Bonus:</strong> Free personal setup support included</div>
+      <a href="https://wa.me/918629924099?text=I want the Crypto Combo ₹3999" target="_blank" class="btn-ghost">Buy Now →</a>
+    </div>
+
+    <!-- BINARY OPTIONS -->
+    <div class="combo-card" style="border-color:rgba(123,47,255,.4);box-shadow:0 0 25px rgba(123,47,255,.1)">
+      <div style="position:absolute;top:14px;right:14px;background:linear-gradient(135deg,var(--neon2),var(--neon));color:#000;font-size:.6rem;font-weight:900;letter-spacing:1.5px;padding:4px 12px;border-radius:20px;text-transform:uppercase">Best Seller</div>
+      <div class="combo-header">
+        <div class="combo-icon-name">
+          <div class="combo-icon" style="background:linear-gradient(135deg,rgba(123,47,255,.18),rgba(181,123,255,.12))">📊</div>
+          <div>
+            <div style="font-size:.62rem;color:#b57bff;letter-spacing:2px;text-transform:uppercase">Binary Options</div>
+            <h3 style="font-size:1rem;margin:2px 0 0">BINARY COMBO</h3>
+          </div>
+        </div>
+        <div class="combo-price-big" style="background:linear-gradient(135deg,var(--neon),var(--neon2));-webkit-background-clip:text;-webkit-text-fill-color:transparent">₹5,999</div>
+      </div>
+      <ul class="feat-list">
+        <li><span class="ck ck-purple">✓</span>OTC AI Indicator</li>
+        <li><span class="ck ck-purple">✓</span>Smart Entry Signals</li>
+        <li><span class="ck ck-purple">✓</span>Trend Confirmation Tool</li>
+        <li><span class="ck ck-purple">✓</span>Risk Management System</li>
+      </ul>
+      <div class="bonus-box bonus-purple">🎁 <strong>Bonus:</strong> Beginner PDF Guide + WhatsApp Training Support</div>
+      <a href="https://wa.me/918629924099?text=I want the Binary Options Combo ₹5999" target="_blank" class="btn-neon">Buy Now →</a>
+    </div>
+
+    <!-- STOCK MARKET -->
+    <div class="combo-card" style="border-color:rgba(0,255,136,.2)">
+      <div class="combo-header">
+        <div class="combo-icon-name">
+          <div class="combo-icon" style="background:linear-gradient(135deg,rgba(0,255,136,.12),rgba(0,200,100,.08))">📈</div>
+          <div>
+            <div style="font-size:.62rem;color:var(--neon3);letter-spacing:2px;text-transform:uppercase">Stock Market</div>
+            <h3 style="font-size:1rem;margin:2px 0 0">STOCK MARKET COMBO</h3>
+          </div>
+        </div>
+        <div class="combo-price-big" style="color:var(--neon3)">₹6,999</div>
+      </div>
+      <ul class="feat-list">
+        <li><span class="ck ck-green">✓</span>NSE/BSE AI Tool</li>
+        <li><span class="ck ck-green">✓</span>BankNifty Indicator</li>
+        <li><span class="ck ck-green">✓</span>Options Strategy Tool</li>
+        <li><span class="ck ck-green">✓</span>Market Scanner</li>
+      </ul>
+      <div class="bonus-box bonus-green">🎁 <strong>Bonus:</strong> Daily Watchlist delivered via WhatsApp</div>
+      <a href="https://wa.me/918629924099?text=I want the Stock Market Combo ₹6999" target="_blank" class="btn-ghost" style="border-color:rgba(0,255,136,.4);color:var(--neon3)">Buy Now →</a>
+    </div>
+
+    <!-- MCX COMMODITY -->
+    <div class="combo-card" style="border-color:rgba(255,180,0,.3)">
+      <div class="combo-header">
+        <div class="combo-icon-name">
+          <div class="combo-icon" style="background:linear-gradient(135deg,rgba(255,180,0,.15),rgba(255,120,0,.1))">🛢️</div>
+          <div>
+            <div style="font-size:.62rem;color:#ffb400;letter-spacing:2px;text-transform:uppercase">MCX Commodity</div>
+            <h3 style="font-size:1rem;margin:2px 0 0">MCX COMMODITY COMBO</h3>
+          </div>
+        </div>
+        <div class="combo-price-big" style="color:#ffb400">₹7,999</div>
+      </div>
+      <ul class="feat-list">
+        <li><span class="ck ck-gold">✓</span>Crude Oil AI Indicator</li>
+        <li><span class="ck ck-gold">✓</span>Gold/Silver Tool</li>
+        <li><span class="ck ck-gold">✓</span>Trend Prediction AI</li>
+        <li><span class="ck ck-gold">✓</span>Stop Loss + Target System</li>
+      </ul>
+      <div class="bonus-box bonus-gold">🎁 <strong>Bonus:</strong> Intraday Setup Training session included</div>
+      <a href="https://wa.me/918629924099?text=I want the MCX Commodity Combo ₹7999" target="_blank" class="btn-ghost" style="border-color:rgba(255,180,0,.4);color:#ffb400">Buy Now →</a>
+    </div>
+  </div>
+
+  <!-- ULTIMATE -->
+  <div class="ultimate-card">
+    <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);white-space:nowrap" class="plan-badge pb-deal">🔥 Ultimate Value — Best Deal Ever</div>
+    <div class="ult-inner">
+      <div style="margin-top:8px">
+        <div style="font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:#ffb400;margin-bottom:6px">SHI-SHA TECH</div>
+        <h2 style="font-size:1.4rem;font-weight:900;margin-bottom:10px">ULTIMATE AI SUITE</h2>
+        <p style="font-size:.86rem;color:var(--muted);line-height:1.7;margin-bottom:14px">The complete SHI-SHA Tech ecosystem — every AI tool, every strategy, every feature, plus everything we build in the future. One package. Full power.</p>
+        <div class="ult-tags">
+          <span class="utag ut1">All 7 AI Tools</span>
+          <span class="utag ut2">Lifetime Updates</span>
+          <span class="utag ut3">VIP WhatsApp Support</span>
+          <span class="utag ut4">Strategy Vault</span>
+          <span class="utag ut1">Premium Indicators</span>
+          <span class="utag ut2">AI Scanners</span>
+          <span class="utag ut3">Private Community</span>
+          <span class="utag ut4">Future Tools Included</span>
+        </div>
+        <div style="margin-top:16px;background:rgba(255,180,0,.07);border:1px solid rgba(255,180,0,.2);border-radius:10px;padding:10px 14px;font-size:.76rem;color:rgba(255,200,100,.85)">🎁 <strong>Bonus:</strong> Personal Setup Assistance + Priority Feature Requests</div>
+        <div style="margin-top:8px;font-size:.74rem;color:var(--muted)">Perfect for: Professional traders · Agencies · Resellers</div>
+      </div>
+      <div class="ult-price-box">
+        <div class="ult-price">₹14,999</div>
+        <div style="font-size:.76rem;color:var(--muted);margin:6px 0 16px">one-time package</div>
+        <a href="https://wa.me/918629924099?text=I want the Ultimate AI Suite ₹14999" target="_blank" class="btn-gold">Buy Now →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 3 — LIFETIME
+══════════════════════════════════════════ -->
+<div class="section" id="lifetime">
+  <div style="text-align:center;margin-bottom:34px">
+    <span class="s-tag">Lifetime Access</span>
+    <h2 class="s-title">Pay Once, <span class="grad">Trade Forever</span></h2>
+    <p class="s-sub" style="margin:0 auto">One-time payment. No monthly fees. All updates included at no extra cost.</p>
+  </div>
+  <div class="lifetime-grid">
+
+    <!-- SINGLE TOOL LIFETIME -->
+    <div class="plan-card" style="text-align:center">
+      <div class="plan-icon">🔑</div>
+      <div class="plan-name">Single Tool Lifetime</div>
+      <div class="plan-price" style="color:var(--text)">₹9,999</div>
+      <div style="font-size:.78rem;color:var(--neon3);font-weight:700;margin-bottom:18px">One-time · No renewals ever</div>
+      <div class="divider"></div>
+      <ul class="feat-list" style="text-align:left;margin-bottom:20px">
+        <li><span class="ck ck-neon">✓</span>Lifetime access to 1 AI tool</li>
+        <li><span class="ck ck-neon">✓</span>All future updates included free</li>
+        <li><span class="ck ck-neon">✓</span>Basic WhatsApp support</li>
+        <li><span class="ck ck-neon">✓</span>No monthly fees — ever</li>
+      </ul>
+      <a href="https://wa.me/918629924099?text=I want Single Tool Lifetime Access ₹9999" target="_blank" class="btn-ghost">Get Lifetime Access →</a>
+    </div>
+
+    <!-- FULL ACCESS LIFETIME -->
+    <div class="plan-card popular" style="text-align:center">
+      <div class="plan-badge pb-pop">🏆 Best Lifetime Deal</div>
+      <div class="plan-icon" style="margin-top:14px">♾️</div>
+      <div class="plan-name c-neon">Full Access Lifetime</div>
+      <div class="plan-price c-neon">₹39,999<span class="per" style="-webkit-text-fill-color:var(--muted)"></span></div>
+      <div style="font-size:.78rem;color:var(--neon3);font-weight:700;margin-bottom:18px">One-time · Never pay again</div>
+      <div class="divider"></div>
+      <ul class="feat-list" style="text-align:left;margin-bottom:20px">
+        <li><span class="ck ck-neon">✓</span><strong style="color:var(--text)">All current & future AI tools</strong></li>
+        <li><span class="ck ck-neon">✓</span>VIP lifetime WhatsApp support</li>
+        <li><span class="ck ck-neon">✓</span>Lifetime updates — free forever</li>
+        <li><span class="ck ck-neon">✓</span>VIP private community access</li>
+        <li><span class="ck ck-neon">✓</span>Priority feature requests</li>
+        <li><span class="ck ck-neon">✓</span>Personal onboarding session</li>
+      </ul>
+      <a href="https://wa.me/918629924099?text=I want Full Access Lifetime ₹39999" target="_blank" class="btn-neon">Get Full Lifetime Access →</a>
+      <div style="font-size:.72rem;color:var(--muted);margin-top:10px">Recommended for agencies, resellers & serious traders</div>
+    </div>
+  </div>
+  <div class="imp-note">
+    <span class="imp-icon">⚡</span>
+    <div><strong>⚠ Lifetime Terms:</strong> Lifetime access covers tool updates within the SHI-SHA Tech platform. <span class="hl">No refunds</span> after access is granted. Tools are for personal use only — redistribution or resale without a written reseller agreement is strictly prohibited.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 4 — ADD-ONS
+══════════════════════════════════════════ -->
+<div class="section" id="addons" style="background:var(--navy)">
+  <div style="text-align:center;margin-bottom:34px">
+    <span class="s-tag">Add-On Services</span>
+    <h2 class="s-title">Supercharge Your <span class="grad">Trading Setup</span></h2>
+    <p class="s-sub" style="margin:0 auto">Optional premium services to accelerate your results. Add to any plan.</p>
+  </div>
+  <div class="addons-wrap">
+    <div class="addon-row">
+      <div class="addon-info">
+        <div class="addon-cat" style="color:var(--neon)">Setup Service</div>
+        <h4>Personal Setup Support</h4>
+        <p>Our team sets up your AI tool on TradingView or your broker platform — step by step, done for you.</p>
+      </div>
+      <div class="addon-price-col">
+        <div class="price">₹999</div>
+        <a href="https://wa.me/918629924099?text=I want Personal Setup Support ₹999" target="_blank" class="nav-cta" style="display:inline-block;margin-top:8px;font-size:.72rem;padding:7px 18px">Add →</a>
+      </div>
+    </div>
+    <div class="addon-row">
+      <div class="addon-info">
+        <div class="addon-cat" style="color:#b57bff">Platform Setup</div>
+        <h4>TradingView Setup</h4>
+        <p>Complete TradingView workspace configured with indicators, alerts & chart layouts optimised for your strategy.</p>
+      </div>
+      <div class="addon-price-col">
+        <div class="price">₹499</div>
+        <a href="https://wa.me/918629924099?text=I want TradingView Setup ₹499" target="_blank" class="nav-cta" style="display:inline-block;margin-top:8px;font-size:.72rem;padding:7px 18px">Add →</a>
+      </div>
+    </div>
+    <div class="addon-row">
+      <div class="addon-info">
+        <div class="addon-cat" style="color:var(--neon3)">Consultation</div>
+        <h4>AI Strategy Consultation</h4>
+        <p>One-on-one session to customise your AI strategy, fine-tune signals, and align tools to your trading style and capital.</p>
+      </div>
+      <div class="addon-price-col">
+        <div class="price">₹2,999</div>
+        <a href="https://wa.me/918629924099?text=I want AI Strategy Consultation ₹2999" target="_blank" class="nav-cta" style="display:inline-block;margin-top:8px;font-size:.72rem;padding:7px 18px">Book →</a>
+      </div>
+    </div>
+    <div class="addon-row">
+      <div class="addon-info">
+        <div class="addon-cat" style="color:#ffb400">Mentorship</div>
+        <h4>Private Mentorship Program</h4>
+        <p>Comprehensive private mentorship covering strategy mastery, risk management, psychology, and live trade review sessions.</p>
+      </div>
+      <div class="addon-price-col">
+        <div class="price">₹9,999</div>
+        <a href="https://wa.me/918629924099?text=I want Private Mentorship ₹9999" target="_blank" class="nav-cta" style="display:inline-block;margin-top:8px;font-size:.72rem;padding:7px 18px">Enroll →</a>
+      </div>
+    </div>
+    <div class="addon-row">
+      <div class="addon-info">
+        <div class="addon-cat" style="color:#b57bff">Community</div>
+        <h4>VIP WhatsApp Group</h4>
+        <p>Exclusive VIP group with daily signals, live market analysis, trade setups, and direct expert team access.</p>
+      </div>
+      <div class="addon-price-col">
+        <div class="price">₹1,999<span style="font-size:.75rem;color:var(--muted);font-weight:400">/mo</span></div>
+        <a href="https://wa.me/918629924099?text=I want VIP WhatsApp Group ₹1999/month" target="_blank" class="nav-cta" style="display:inline-block;margin-top:8px;font-size:.72rem;padding:7px 18px">Join →</a>
+      </div>
+    </div>
+    <div class="addon-row" style="border-color:var(--neon);background:linear-gradient(135deg,rgba(0,240,255,.03),rgba(123,47,255,.03))">
+      <div class="addon-info">
+        <div class="addon-cat" style="color:var(--neon)">Custom Development</div>
+        <h4>Custom Indicator Development</h4>
+        <p>Bespoke AI indicator or strategy built to your exact specifications. Price determined after a free scoping consultation.</p>
+      </div>
+      <div class="addon-price-col">
+        <div class="price" style="font-size:1rem;color:var(--neon)">Starting<br>₹14,999</div>
+        <a href="https://wa.me/918629924099?text=I want a Custom Indicator — let's discuss" target="_blank" class="nav-cta" style="display:inline-block;margin-top:8px;font-size:.72rem;padding:7px 18px">Enquire →</a>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 5 — COMPARISON TABLE
+══════════════════════════════════════════ -->
+<div class="section" id="compare">
+  <div style="text-align:center;margin-bottom:34px">
+    <span class="s-tag">Plan Comparison</span>
+    <h2 class="s-title">Find Your <span class="grad">Perfect Plan</span></h2>
+    <p class="s-sub" style="margin:0 auto">A clear side-by-side comparison of all monthly subscription plans.</p>
+  </div>
+  <div class="cmp-wrap">
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th style="text-align:left">Feature</th>
+          <th>Basic<br><span class="cmp-price" style="color:var(--text)">₹999/mo</span></th>
+          <th class="pop-col">Pro ⭐<br><span class="cmp-price" style="color:var(--neon)">₹2,499/mo</span></th>
+          <th>Elite 👑<br><span class="cmp-price" style="color:#b57bff">₹4,999/mo</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>AI Tools Included</td><td>1 Tool</td><td class="pop-col">Any 3 Tools</td><td>All 7 Tools</td></tr>
+        <tr><td>Signal Type</td><td>Basic</td><td class="pop-col">Advanced</td><td>Premium + AI</td></tr>
+        <tr><td>Mobile Access</td><td><span class="yes">✓</span></td><td class="pop-col"><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+        <tr><td>WhatsApp Support</td><td>Standard</td><td class="pop-col">Priority</td><td>VIP</td></tr>
+        <tr><td>Market Updates</td><td>Weekly</td><td class="pop-col">Daily</td><td>Real-time</td></tr>
+        <tr><td>Risk Management</td><td><span class="no">—</span></td><td class="pop-col"><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+        <tr><td>Strategy Guidance</td><td><span class="no">—</span></td><td class="pop-col"><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+        <tr><td>AI Automation</td><td><span class="no">—</span></td><td class="pop-col"><span class="no">—</span></td><td><span class="yes">✓</span></td></tr>
+        <tr><td>Market Scanner</td><td><span class="no">—</span></td><td class="pop-col"><span class="no">—</span></td><td><span class="yes">✓</span></td></tr>
+        <tr><td>Premium Indicators</td><td><span class="no">—</span></td><td class="pop-col"><span class="no">—</span></td><td><span class="yes">✓</span></td></tr>
+        <tr><td>Early Tool Access</td><td><span class="no">—</span></td><td class="pop-col"><span class="no">—</span></td><td><span class="yes">✓</span></td></tr>
+        <tr><td>Private Community</td><td><span class="no">—</span></td><td class="pop-col"><span class="no">—</span></td><td><span class="yes">✓</span></td></tr>
+        <tr>
+          <td></td>
+          <td><a href="https://wa.me/918629924099?text=I want Basic Plan" target="_blank" class="btn-ghost" style="padding:9px 14px;font-size:.78rem">Start →</a></td>
+          <td class="pop-col"><a href="https://wa.me/918629924099?text=I want Pro Plan" target="_blank" class="btn-neon" style="padding:9px 14px;font-size:.78rem">Start →</a></td>
+          <td><a href="https://wa.me/918629924099?text=I want Elite Plan" target="_blank" class="btn-purple" style="padding:9px 14px;font-size:.78rem">Start →</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 6 — FAQ
+══════════════════════════════════════════ -->
+<div class="section" id="faq" style="background:var(--navy)">
+  <div style="text-align:center;margin-bottom:34px">
+    <span class="s-tag">FAQ</span>
+    <h2 class="s-title">Frequently Asked <span class="grad">Questions</span></h2>
+  </div>
+  <div class="faq-wrap">
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How do I receive my AI tool after payment? <span class="arr">›</span></div><div class="faq-a">After payment confirmation, our team will activate your tool access via WhatsApp within 24 hours. You'll receive a setup guide and full instructions. Contact us at +91 8629924099 if not received within 24 hours.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Are profits guaranteed with these tools? <span class="arr">›</span></div><div class="faq-a">No. SHI-SHA Tech tools are AI-powered analysis tools, not profit generators. Trading always involves risk and there is no guarantee of profits. Signal accuracy is based on historical backtesting and live results will vary. Never invest more than you can afford to lose.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What is your refund policy? <span class="arr">›</span></div><div class="faq-a">Due to the digital nature of our tools and immediate access upon activation, no refunds are issued once a tool is activated. We encourage you to contact our team via WhatsApp before purchasing if you have questions about a specific tool.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can I upgrade from Basic to Pro or Elite? <span class="arr">›</span></div><div class="faq-a">Yes. You can upgrade your plan at any time. Simply contact us on WhatsApp and we'll calculate the pro-rated difference for your remaining subscription period.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Which platforms are these tools compatible with? <span class="arr">›</span></div><div class="faq-a">Our tools are primarily compatible with TradingView, Pocket Option, Quotex, IQ Option, Deriv, and Binomo. Setup support is available for all platforms we officially support.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Is binary options trading legal in India? <span class="arr">›</span></div><div class="faq-a">The legality of binary options trading varies by jurisdiction. It is your sole responsibility to verify the laws in your country or region before trading. SHI-SHA Tech does not provide legal advice on trading regulations.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What payment methods do you accept? <span class="arr">›</span></div><div class="faq-a">We accept UPI, Razorpay, Paytm, PhonePe, Google Pay, Bank Transfer, and optionally Crypto. After placing your order via WhatsApp, our team will share payment details for your chosen method.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How is Lifetime Access different from monthly plans? <span class="arr">›</span></div><div class="faq-a">Lifetime Access is a one-time payment with no recurring fees. You receive all current tools plus all future updates at no additional cost. Monthly plans provide flexible access that can be cancelled anytime but require continued subscription to maintain access.</div></div>
+  </div>
+</div>
+
+<!-- DISCLAIMER FOOTER -->
+<div class="foot-disc">
+  <strong>⚠ Professional Risk Disclaimer:</strong> SHI-SHA Tech provides AI-based trading tools and educational technology solutions only. Trading in financial markets involves significant risk of loss. <strong>No profits are guaranteed.</strong> Past performance does not guarantee future results. Users are advised to trade responsibly and consult a qualified financial advisor before investing. SHI-SHA Tech does not provide financial or investment advice. Binary options may be restricted or prohibited in certain jurisdictions — verify local laws before trading.
+</div>
+
+<footer>
+  <div style="display:flex;align-items:center;gap:10px">
+    <span style="font-size:.9rem;font-weight:900;letter-spacing:2px;background:linear-gradient(135deg,#00f0ff,#7b2fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent">SHI-SHA TECH</span>
+    <span>© 2025 All rights reserved.</span>
+  </div>
+  <div>
+    <a href="https://wa.me/918629924099" target="_blank">WhatsApp</a>
+    <a href="mailto:shisha.techbinary01@gmail.com">Email</a>
+    <a href="https://t.me/ShishaTechSignals" target="_blank">Telegram</a>
+    <a href="https://instagram.com/sishatech01" target="_blank">Instagram</a>
+  </div>
+</footer>
+
+<script>
+// COUNTDOWN — 23h 59m 59s reset daily
+function startCountdown(){
+  const end=new Date();
+  end.setHours(23,59,59,0);
+  function tick(){
+    const now=new Date(),diff=end-now;
+    if(diff<=0){end.setDate(end.getDate()+1)}
+    const h=Math.floor(diff/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+    document.getElementById('cd-h').textContent=String(h).padStart(2,'0');
+    document.getElementById('cd-m').textContent=String(m).padStart(2,'0');
+    document.getElementById('cd-s').textContent=String(s).padStart(2,'0');
+  }
+  tick();setInterval(tick,1000);
+}
+startCountdown();
+
+// FAQ TOGGLE
+function toggleFaq(el){
+  const item=el.parentElement;
+  const wasOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+  if(!wasOpen)item.classList.add('open');
+}
+
+// NAV active on scroll
+const sections=document.querySelectorAll('[id]');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-120)cur=s.id});
+  document.querySelectorAll('.nav-links a').forEach(a=>{
+    a.classList.toggle('active',a.getAttribute('href')==='#'+cur);
+  });
+});
+</script>
+</body>
+</html>
